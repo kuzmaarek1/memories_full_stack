@@ -19,6 +19,7 @@ const Post = () => {
   const navigate = useNavigate()
   const classes = useStyles()
   const { id } = useParams()
+  const serverPublic = import.meta.env.VITE_REACT_APP_PUBLIC_FOLDER
 
   useEffect(() => {
     dispatch(getPost(id))
@@ -93,8 +94,9 @@ const Post = () => {
           <img
             className={classes.media}
             src={
-              post.selectedFile ||
-              'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'
+              post.selectedFile !== ''
+                ? `${serverPublic}${post.selectedFile}`
+                : 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'
             }
             alt={post.title}
           />
@@ -126,7 +128,14 @@ const Post = () => {
                   <Typography gutterBottom variant="subtitle1">
                     Likes: {likes.length}
                   </Typography>
-                  <img src={selectedFile} width="200px" />
+                  <img
+                    src={
+                      selectedFile !== ''
+                        ? `${serverPublic}${selectedFile}`
+                        : 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'
+                    }
+                    width="200px"
+                  />
                 </div>
               )
             )}

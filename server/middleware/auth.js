@@ -9,7 +9,8 @@ const auth = async (req, res, next) => {
 
     let decodedData;
 
-    if (token && isCustomAuth) {//zwykłelogowanieczyzgoogli      
+    //check is Google Login   
+    if (token && isCustomAuth) { 
       decodedData = jwt.verify(token, secret);
       req.userId = decodedData?.id;
     } else {
@@ -18,11 +19,6 @@ const auth = async (req, res, next) => {
     }
 
     next(); 
-    //wykonanienasepnejakcji np.likepost 
-    //want to like a post
-    //click the like button 
-    //auth middleware
-    //like controller
   } catch (error) {
     console.log(error);
   }

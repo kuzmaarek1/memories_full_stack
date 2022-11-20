@@ -63,7 +63,6 @@ const Auth = () => {
     alert('Google Sign In was unsuccessful. Try again later')
 
   const handleSubmit = (e) => {
-    console.log(form)
     e.preventDefault()
     if (isSignup) {
       dispatch(signup(form, navigate))
