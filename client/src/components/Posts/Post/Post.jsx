@@ -24,26 +24,25 @@ const Post = ({ post, setCurrentId }) => {
   const classes = useStyles()
   const navigate = useNavigate()
   const user = JSON.parse(localStorage.getItem('profile'))
-  const [likes, setLikes] = useState(post?.likes);
+  const [likes, setLikes] = useState(post?.likes)
 
-  const userId = user?.result.googleId || user?.result?._id;
-  const hasLikedPost = post?.likes?.find((like) => like === userId);
+  const userId = user?.result.googleId || user?.result?._id
+  const hasLikedPost = post?.likes?.find((like) => like === userId)
+  const serverPublic = import.meta.env.VITE_REACT_APP_PUBLIC_FOLDER
 
   const handleLike = async () => {
-    dispatch(likePost(post._id));
+    dispatch(likePost(post._id))
 
     if (hasLikedPost) {
-      setLikes(post.likes.filter((id) => id !== userId));
+      setLikes(post.likes.filter((id) => id !== userId))
     } else {
-      setLikes([...post.likes, userId]);
+      setLikes([...post.likes, userId])
     }
-  };
+  }
 
   const Likes = () => {
     if (likes.length > 0) {
-      return likes.find(
-        (like) => (like === userId)
-      ) ? (
+      return likes.find((like) => like === userId) ? (
         <>
           <ThumbUpAltIcon fontSize="small" />
           &nbsp;
@@ -81,8 +80,9 @@ const Post = ({ post, setCurrentId }) => {
         <CardMedia
           className={classes.media}
           image={
-            post.selectedFile ||
-            'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'
+            post.selectedFile
+              ? `${serverPublic}${post.selectedFile}`
+              : 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'
           }
           title={post.title}
         />
