@@ -8,8 +8,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-
-import { getPost, getPostsBySearch } from '../../actions/posts'
+import { getPost, getPostsBySearch } from '@/actions/posts'
 import useStyles from './styles'
 import CommentSection from './CommentSection'
 

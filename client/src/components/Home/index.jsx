@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Container,
   Grow,
@@ -10,13 +10,10 @@ import {
 } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
-import ChipInput from 'material-ui-chip-input' //tag
-
-import { getPosts, getPostsBySearch } from '../../actions/posts'
+import ChipInput from 'material-ui-chip-input'
+import { getPostsBySearch } from '@/actions/posts'
 import useStyles from './styles'
-import Pagination from '../Pagination'
-import Posts from '../Posts/Posts'
-import Form from '../Form/Form.jsx'
+import { Posts, Form, Pagination } from '*'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)

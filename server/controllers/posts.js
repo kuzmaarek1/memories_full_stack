@@ -114,5 +114,3 @@ export const getPostsByCreator = async (req, res) => {
 }
 
 export default router;
-
-//export const getPosts = (req, res)=>{res.send('This Work!')}

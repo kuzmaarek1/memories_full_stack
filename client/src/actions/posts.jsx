@@ -10,9 +10,9 @@ import {
   LIKE,
   COMMENT,
   FETCH_BY_CREATOR,
-} from '../constants/actionTypes'
+} from '@/constants/actionTypes'
 
-import * as api from '../api/index.jsx'
+import * as api from '@/api/index.jsx'
 
 export const getPosts = (page) => async (dispatch) => {
   try {

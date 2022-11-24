@@ -10,7 +10,7 @@ import {
   START_LOADING,
   END_LOADING,
   FETCH_BY_CREATOR,
-} from '../constants/actionTypes'
+} from '@/constants/actionTypes'
 
 export default (state = { isLoading: true, posts: [] }, action) => {
   switch (action.type) {

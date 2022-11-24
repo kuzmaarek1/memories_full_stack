@@ -12,11 +12,10 @@ import jwt_decode from 'jwt-decode'
 import { useDispatch } from 'react-redux'
 import { GoogleLogin } from '@react-oauth/google'
 import LockOutlineIcon from '@material-ui/icons/LockOutlined'
-
 import useStyles from './styles'
-import Input from './Input'
-import { AUTH } from '../../constants/actionTypes'
-import { signin, signup } from '../../actions/auth'
+import { Input } from '*'
+import { AUTH } from '@/constants/actionTypes'
+import { signin, signup } from '@/actions/auth'
 
 const initialState = {
   firstName: '',

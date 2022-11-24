@@ -7,13 +7,8 @@ import {
   useRoutes,
 } from 'react-router-dom'
 import { Container } from '@material-ui/core'
-
-import Home from './components/Home/Home'
-import Auth from './components/Auth/Auth'
-import Navbar from './components/Navbar/Navbar'
-import PostDetails from './components/PostDetails/PostDetails'
-import CreatorOrTag from './components/CreatorOrTag/CreatorOrTag'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { Home, Auth, Navbar, PostDetails, CreatorOrTag } from '@/components'
 
 const FindPosts = () =>
   useRoutes([

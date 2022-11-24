@@ -3,9 +3,9 @@ import { TextField, Button, Typography, Paper } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import FileBase from 'react-file-base64'
-import { useImage } from '../../hooks/useImage'
+import { useImage } from '@/hooks/useImage'
 import useStyles from './styles'
-import { createPost, updatePost } from '../../actions/posts'
+import { createPost, updatePost } from '@/actions/posts'
 
 const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({

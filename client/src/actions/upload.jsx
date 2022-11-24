@@ -1,4 +1,4 @@
-import * as api from '../api/index.jsx'
+import * as api from '@/api/index.jsx'
 
 export const uploadImage = (data) => async (dispatch) => {
   try {

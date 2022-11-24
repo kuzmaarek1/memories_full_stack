@@ -16,7 +16,7 @@ import moment from 'moment'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { likePost, deletePost } from '../../../actions/posts'
+import { likePost, deletePost } from '@/actions/posts'
 import useStyles from './styles'
 
 const Post = ({ post, setCurrentId }) => {

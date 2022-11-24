@@ -4,12 +4,11 @@ import jwt_decode from 'jwt-decode'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
-
 import useStyles from './styles'
-import memoriesLogo from '../../images/memoriesLogo.png'
-import memoriesText from '../../images/memoriesText.png'
+import memoriesLogo from '@/images/memoriesLogo.png'
+import memoriesText from '@/images/memoriesText.png'
 
-import { LOGOUT } from '../../constants/actionTypes'
+import { LOGOUT } from '@/constants/actionTypes'
 
 const Navbar = () => {
   const classes = useStyles()
