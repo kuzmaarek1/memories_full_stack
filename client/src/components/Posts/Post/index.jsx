@@ -14,15 +14,18 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import moment from 'moment'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
+import { useNavigate } from 'react-router-dom'
 import { likePost, deletePost } from '@/actions/posts'
 import useStyles from './styles'
+import { useQuery } from '@/hooks/useQuery'
 
 const Post = ({ post, setCurrentId }) => {
   const dispatch = useDispatch()
   const classes = useStyles()
   const navigate = useNavigate()
+  const query = useQuery()
+  const page = query.get('page') || 1
   const user = JSON.parse(localStorage.getItem('profile'))
   const [likes, setLikes] = useState(post?.likes)
 
@@ -139,7 +142,7 @@ const Post = ({ post, setCurrentId }) => {
           <Button
             size="small"
             color="secondary"
-            onClick={() => dispatch(deletePost(post._id))}
+            onClick={() => dispatch(deletePost(post._id, page))}
           >
             <DeleteIcon fontSize="small" /> Delete
           </Button>

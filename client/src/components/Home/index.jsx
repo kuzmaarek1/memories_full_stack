@@ -13,15 +13,12 @@ import {
 import { IoIosCreate } from 'react-icons/io'
 import { GrClose } from 'react-icons/gr'
 import { useDispatch } from 'react-redux'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { MuiChipsInput } from 'mui-chips-input'
 import { getPostsBySearch } from '@/actions/posts'
+import { useQuery } from '@/hooks/useQuery'
 import useStyles from './styles'
 import { Posts, Form, Pagination } from '*'
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search)
-}
 
 const Home = () => {
   const classes = useStyles()
