@@ -7,7 +7,11 @@ import {
   AppBar,
   TextField,
   Button,
+  Modal,
+  Box,
 } from '@material-ui/core'
+import { IoIosCreate } from 'react-icons/io'
+import { GrClose } from 'react-icons/gr'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { MuiChipsInput } from 'mui-chips-input'
@@ -29,6 +33,7 @@ const Home = () => {
   const [currentId, setCurrentId] = useState(0)
   const [search, setSearch] = useState('')
   const [tags, setTags] = useState([])
+  const [toggle, setToggle] = useState(false)
 
   const searchPost = () => {
     if (search.trim() || tags) {
@@ -49,8 +54,26 @@ const Home = () => {
 
   const handleChange = (tag) => setTags(tag)
 
+  const handleOpen = () => {
+    setToggle(true)
+  }
+
+  const handleClose = () => {
+    setToggle(false)
+  }
+
   return (
     <>
+      <Modal open={toggle} onClose={handleClose} className={classes.modal}>
+        <Box className={classes.modalContainer}>
+          <GrClose className={classes.closeButton} onClick={handleClose} />
+          <Form
+            currentId={currentId}
+            setCurrentId={setCurrentId}
+            className={classes.modalForm}
+          />
+        </Box>
+      </Modal>
       <AppBar
         className={classes.appBarSearch}
         position="static"
@@ -84,6 +107,7 @@ const Home = () => {
           <Button onClick={searchPost} color="primary" variant="contained">
             Search
           </Button>
+          <IoIosCreate className={classes.icons} onClick={handleOpen} />
         </div>
       </AppBar>
       <Grow in>
@@ -95,11 +119,13 @@ const Home = () => {
             alignItems="stretch"
             spacing={3}
           >
-            <Grid item xs={12} sm={6} md={9}>
+            <Grid item xs={12} sm={12} md={12} lg={9}>
               <Posts setCurrentId={setCurrentId} />
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Form currentId={currentId} setCurrentId={setCurrentId} />
+            <Grid item xs={12} sm={12} md={12} lg={3}>
+              <div className={classes.form}>
+                <Form currentId={currentId} setCurrentId={setCurrentId} />
+              </div>
               {!searchQuery && !tags.length && (
                 <Paper elevation={6} className={classes.pagination}>
                   <Pagination page={page} />

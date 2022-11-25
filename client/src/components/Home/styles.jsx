@@ -22,6 +22,12 @@ export default makeStyles((theme) => ({
     marginTop: '1rem',
     padding: '16px',
   },
+  icons: {
+    display: 'none',
+  },
+  modal: {
+    display: 'none',
+  },
   [theme.breakpoints.down('md')]: {
     appBarSearch: {
       gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
@@ -29,18 +35,51 @@ export default makeStyles((theme) => ({
     },
     elemnetButton: {
       gridColumn: 'span 2 / span 2',
+      position: 'relative',
     },
-  },
-  [theme.breakpoints.down('xs')]: {
-    container: {
-      flexDirection: 'column-reverse',
+    icons: {
+      display: 'block',
+      position: 'absolute',
+      top: 0,
+      right: '20px',
+      bottom: 0,
+      margin: 'auto 0',
+      width: '30px',
+      height: '30px',
+      cursor: 'pointer',
     },
-    appBarSearch: {
-      gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
-      gridTemplateRows: '0.2fr 1fr 0.2fr',
+    form: {
+      display: 'none',
     },
-    elemnetButton: {
-      gridColumn: 'span 1 / span 1',
+    modal: {
+      display: 'block',
+    },
+    modalContainer: {
+      position: 'absolute',
+      width: '90%',
+      outline: 'none',
+      border: 'none',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+    },
+    closeButton: {
+      position: 'absolute',
+      cursor: 'pointer',
+      top: '12px',
+      right: '12px',
+    },
+    modalForm: {
+      boxShadow: '24',
+    },
+    [theme.breakpoints.down('xs')]: {
+      appBarSearch: {
+        gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
+        gridTemplateRows: '0.2fr 1fr 0.2fr',
+      },
+      elemnetButton: {
+        gridColumn: 'span 1 / span 1',
+      },
     },
   },
 }))
