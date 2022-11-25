@@ -35,46 +35,44 @@ const Navbar = () => {
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
       <Link to="/" className={classes.brandContainer}>
-        <img
-          className={classes.image}
-          src={memoriesText}
-          alt="icon"
-          height="60"
-        />
-        <img
-          className={classes.image}
-          src={memoriesLogo}
-          alt="icon"
-          height="45"
-        />
+        <img className={classes.image} src={memoriesText} alt="icon" />
+        <img className={classes.image} src={memoriesLogo} alt="icon" />
       </Link>
-      <Toolbar className={classes.toolbar}></Toolbar>
-      {user ? (
+      <Toolbar className={classes.toolbar}>
         <div className={classes.profile}>
-          <Avatar
-            className={classes.purple}
-            alt={user?.result.name}
-            src={user?.result.imageUrl}
-          >
-            {user?.result?.name?.charAt(0)}
-          </Avatar>
-          <Typography className={classes.userName} variant="h6">
-            {user?.result.name}
-          </Typography>
-          <Button
-            variant="contained"
-            className={classes.logout}
-            onClick={logout}
-            color="secondary"
-          >
-            Logout
-          </Button>
+          {user ? (
+            <>
+              <Avatar
+                className={classes.purple}
+                alt={user?.result.name}
+                src={user?.result.imageUrl}
+              >
+                {user?.result?.name?.charAt(0)}
+              </Avatar>
+              <Typography className={classes.userName} variant="h6">
+                {user?.result.name}
+              </Typography>
+              <Button
+                variant="contained"
+                className={classes.logout}
+                onClick={logout}
+                color="secondary"
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Button
+              component={Link}
+              to="/auth"
+              variant="contained"
+              color="primary"
+            >
+              Sign In
+            </Button>
+          )}
         </div>
-      ) : (
-        <Button component={Link} to="/auth" variant="contained" color="primary">
-          Sign In
-        </Button>
-      )}
+      </Toolbar>
     </AppBar>
   )
 }
