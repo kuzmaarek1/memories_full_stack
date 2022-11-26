@@ -51,6 +51,7 @@ const Post = ({ post, setCurrentId }) => {
       `Deleteting post ${post.title}`,
       `Delete post ${post.title}`
     )
+    setCurrentId(0)
   }
 
   const Likes = () => {
