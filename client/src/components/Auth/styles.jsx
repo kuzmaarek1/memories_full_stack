@@ -28,4 +28,9 @@ export default makeStyles((theme) => ({
   googleButton: {
     marginBottom: theme.spacing(2),
   },
+  [theme.breakpoints.down('xs')]: {
+    buttonSwitch: {
+      fontSize: '10px',
+    },
+  },
 }))

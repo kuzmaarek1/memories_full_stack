@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core'
 import { useNavigate } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
+import { toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { GoogleLogin } from '@react-oauth/google'
 import LockOutlineIcon from '@material-ui/icons/LockOutlined'
@@ -29,7 +30,7 @@ const initialState = {
 const Auth = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const toast = useToast()
+  const toastBanner = useToast()
   const navigate = useNavigate()
   const [form, setForm] = useState(initialState)
   const [isSignup, setIsSignup] = useState(false)
@@ -66,13 +67,17 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (isSignup) {
-      const singup = dispatch(signup(form, navigate))
-      toast.handleDisplayBanner(
-        singup,
-        `Creating user`,
-        `Created user`,
-        `Incorrect data or user is already exists!`
-      )
+      if (form.password === form.confirmPassword) {
+        const singup = dispatch(signup(form, navigate))
+        toastBanner.handleDisplayBanner(
+          singup,
+          `Creating user`,
+          `Created user`,
+          `Incorrect data or user is already exists!`
+        )
+      } else {
+        toast.error('Passwords does not match')
+      }
     } else {
       const sigin = dispatch(signin(form, navigate))
     }
@@ -137,16 +142,17 @@ const Auth = () => {
           >
             {isSignup ? 'Sign Up' : 'Sign In'}
           </Button>
-
-          <GoogleLogin
-            logo_alignment="center"
-            onSuccess={googleSuccess}
-            onError={googleError}
-          />
-
-          <Grid container justifyContent="flex-end">
+          <Grid container justifyContent="center">
+            <GoogleLogin
+              width="250"
+              logo_alignment="center"
+              onSuccess={googleSuccess}
+              onError={googleError}
+            />
+          </Grid>
+          <Grid container justifyContent="center">
             <Grid item>
-              <Button onClick={switchMode}>
+              <Button onClick={switchMode} className={classes.buttonSwitch}>
                 {isSignup
                   ? 'Already have an account? Sign in'
                   : "Don't have an account? Sign Up"}
