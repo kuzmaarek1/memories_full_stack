@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button, Typography, Paper } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import FileBase from 'react-file-base64'
 import { useImage } from '@/hooks/useImage'
+import { useToast } from '@/hooks/useToast'
 import useStyles from './styles'
 import { createPost, updatePost } from '@/actions/posts'
 
-const Form = ({ currentId, setCurrentId }) => {
+const Form = ({ currentId, setCurrentId, setToggle }) => {
   const [postData, setPostData] = useState({
     title: '',
     message: '',
@@ -22,8 +22,8 @@ const Form = ({ currentId, setCurrentId }) => {
   )
   const dispatch = useDispatch()
   const classes = useStyles()
-  const navigate = useNavigate()
   const image = useImage()
+  const toast = useToast()
 
   useEffect(() => {
     if (post) setPostData(post)
@@ -46,12 +46,20 @@ const Form = ({ currentId, setCurrentId }) => {
       postData.selectedFile = image.fileName.current
     } else postData.selectedFile = ''
     if (currentId === 0) {
-      dispatch(createPost({ ...postData, name: user?.result?.name }, navigate))
+      const create = dispatch(
+        createPost({ ...postData, name: user?.result?.name })
+      )
+      toast.handleDisplayBanner(
+        create,
+        `Creating post ${postData.title}`,
+        `Add post ${postData.title}`
+      )
       clear()
     } else {
       dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }))
       clear()
     }
+    setToggle(false)
   }
 
   if (!user?.result?.name) {

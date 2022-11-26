@@ -9,7 +9,7 @@ export const getPosts = async (req, res) => {
     const { page } = req.query;
 
     try {
-        const LIMIT = 8;
+        const LIMIT = 6;
         const startIndex = (Number(page) - 1) * LIMIT
         const total = await PostMessage.countDocuments({}) 
 
@@ -61,7 +61,7 @@ export const updatePost = async (req, res) => {
     
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
     const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
-    await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
+    await PostMessage.findByIdAndUpdate(id,{ $set:updatedPost }, { new: true });
     res.json(updatedPost);
 }
 

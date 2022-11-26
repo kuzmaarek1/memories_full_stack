@@ -31,7 +31,6 @@ const Home = () => {
   const [search, setSearch] = useState('')
   const [tags, setTags] = useState([])
   const [toggle, setToggle] = useState(false)
-
   const searchPost = () => {
     if (search.trim() || tags) {
       dispatch(getPostsBySearch({ search, tags: tags.join(',') }))
@@ -50,14 +49,8 @@ const Home = () => {
   }
 
   const handleChange = (tag) => setTags(tag)
-
-  const handleOpen = () => {
-    setToggle(true)
-  }
-
-  const handleClose = () => {
-    setToggle(false)
-  }
+  const handleOpen = () => setToggle(true)
+  const handleClose = () => setToggle(false)
 
   return (
     <>
@@ -67,6 +60,7 @@ const Home = () => {
           <Form
             currentId={currentId}
             setCurrentId={setCurrentId}
+            setToggle={setToggle}
             className={classes.modalForm}
           />
         </Box>
@@ -116,12 +110,16 @@ const Home = () => {
             alignItems="stretch"
             spacing={3}
           >
-            <Grid item xs={12} sm={12} md={12} lg={9}>
+            <Grid item xs={12} sm={12} md={12} lg={8}>
               <Posts setCurrentId={setCurrentId} />
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={3}>
+            <Grid item xs={12} sm={12} md={12} lg={4}>
               <div className={classes.form}>
-                <Form currentId={currentId} setCurrentId={setCurrentId} />
+                <Form
+                  currentId={currentId}
+                  setCurrentId={setCurrentId}
+                  setToggle={setToggle}
+                />
               </div>
               {!searchQuery && !tags.length && (
                 <Paper elevation={6} className={classes.pagination}>
