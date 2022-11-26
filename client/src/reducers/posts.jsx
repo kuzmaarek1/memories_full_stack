@@ -66,6 +66,7 @@ export default (state = { isLoading: true, posts: [] }, action) => {
           }
           return post
         }),
+        post: { ...state.post, comments: action.payload.comments },
       }
     default:
       return state

@@ -11,8 +11,8 @@ import {
   COMMENT,
   FETCH_BY_CREATOR,
 } from '@/constants/actionTypes'
-
 import * as api from '@/api/index.jsx'
+import { toast } from 'react-hot-toast'
 
 export const getPosts = (page) => async (dispatch) => {
   try {
@@ -23,6 +23,7 @@ export const getPosts = (page) => async (dispatch) => {
 
     dispatch({ type: END_LOADING })
   } catch (error) {
+    toast.error('Error! Posts not loaded!')
     console.log(error.message)
   }
 }
@@ -35,6 +36,7 @@ export const getPost = (id) => async (dispatch) => {
 
     dispatch({ type: FETCH_POST, payload: { post: data } })
   } catch (error) {
+    toast.error('Error! Post not loaded!')
     console.log(error)
   }
 }
@@ -50,6 +52,7 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
 
     dispatch({ type: END_LOADING })
   } catch (error) {
+    toast.error('Error! Posts not loaded!')
     console.log(error.message)
   }
 }
@@ -65,6 +68,7 @@ export const createPost = (post) => async (dispatch) => {
     dispatch(getPosts(1))
   } catch (error) {
     console.log(error.message)
+    return data
   }
 }
 
@@ -75,6 +79,7 @@ export const updatePost = (id, post) => async (dispatch) => {
     dispatch({ type: UPDATE, payload: data })
   } catch (error) {
     console.log(error.message)
+    return data
   }
 }
 
@@ -83,29 +88,30 @@ export const likePost = (id) => async (dispatch) => {
     const { data } = await api.likePost(id)
     dispatch({ type: LIKE, payload: data })
   } catch (error) {
+    toast.error('Error!')
     console.log(error.message)
   }
 }
 
 export const deletePost = (id, page) => async (dispatch) => {
   try {
-    await api.deletePost(id)
+    const data = await api.deletePost(id)
     dispatch({ type: DELETE, payload: id })
     dispatch(getPosts(page))
   } catch (error) {
     console.log(error.message)
+    return data
   }
 }
 
 export const commentPost = (value, id) => async (dispatch) => {
   try {
     const { data } = await api.comment(value, id)
-
     dispatch({ type: COMMENT, payload: data })
-
-    return data.comments
+    //    return data.comments
   } catch (error) {
     console.log(error)
+    return data
   }
 }
 
@@ -119,6 +125,7 @@ export const getPostsByCreator = (name) => async (dispatch) => {
     dispatch({ type: FETCH_BY_CREATOR, payload: { data } })
     dispatch({ type: END_LOADING })
   } catch (error) {
+    toast.error('Error! Posts not loaded!')
     console.log(error)
   }
 }

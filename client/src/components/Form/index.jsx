@@ -52,11 +52,18 @@ const Form = ({ currentId, setCurrentId, setToggle }) => {
       toast.handleDisplayBanner(
         create,
         `Creating post ${postData.title}`,
-        `Add post ${postData.title}`
+        `Added post ${postData.title}`
       )
       clear()
     } else {
-      dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }))
+      const update = dispatch(
+        updatePost(currentId, { ...postData, name: user?.result?.name })
+      )
+      toast.handleDisplayBanner(
+        update,
+        `Updating post ${postData.title}`,
+        `Update post ${postData.title}`
+      )
       clear()
     }
     setToggle(false)

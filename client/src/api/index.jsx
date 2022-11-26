@@ -32,6 +32,4 @@ export const fetchPostsByCreator = (name) =>
 export const signIn = (formData) => API.post('/user/signin', formData)
 export const signUp = (formData) => API.post('/user/signup', formData)
 
-export const uploadImage = (data) => {
-  return API.post('/upload/', data)
-}
+export const uploadImage = (data) => API.post('/upload/', data)

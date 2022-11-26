@@ -63,8 +63,9 @@ const Post = () => {
             color="textSecondary"
             component="h2"
           >
-            {post.tags.map((tag) => (
+            {post.tags.map((tag, index) => (
               <Link
+                key={index}
                 to={`/tags/${tag}`}
                 style={{ textDecoration: 'none', color: '#3f51b5' }}
               >

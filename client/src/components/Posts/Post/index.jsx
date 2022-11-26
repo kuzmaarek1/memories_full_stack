@@ -14,16 +14,17 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import moment from 'moment'
 import { useDispatch } from 'react-redux'
-
 import { useNavigate } from 'react-router-dom'
 import { likePost, deletePost } from '@/actions/posts'
 import useStyles from './styles'
 import { useQuery } from '@/hooks/useQuery'
+import { useToast } from '@/hooks/useToast'
 
 const Post = ({ post, setCurrentId }) => {
   const dispatch = useDispatch()
   const classes = useStyles()
   const navigate = useNavigate()
+  const toast = useToast()
   const query = useQuery()
   const page = query.get('page') || 1
   const user = JSON.parse(localStorage.getItem('profile'))
@@ -41,6 +42,15 @@ const Post = ({ post, setCurrentId }) => {
     } else {
       setLikes([...post.likes, userId])
     }
+  }
+
+  const handleDeletePost = () => {
+    const deleteFunc = dispatch(deletePost(post._id, page))
+    toast.handleDisplayBanner(
+      deleteFunc,
+      `Deleteting post ${post.title}`,
+      `Delete post ${post.title}`
+    )
   }
 
   const Likes = () => {
@@ -139,11 +149,7 @@ const Post = ({ post, setCurrentId }) => {
         </Button>
         {(user?.result?.googleId === post?.creator ||
           user?.result?._id === post?.creator) && (
-          <Button
-            size="small"
-            color="secondary"
-            onClick={() => dispatch(deletePost(post._id, page))}
-          >
+          <Button size="small" color="secondary" onClick={handleDeletePost}>
             <DeleteIcon fontSize="small" /> Delete
           </Button>
         )}
