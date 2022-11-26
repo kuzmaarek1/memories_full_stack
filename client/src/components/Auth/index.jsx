@@ -12,11 +12,11 @@ import jwt_decode from 'jwt-decode'
 import { useDispatch } from 'react-redux'
 import { GoogleLogin } from '@react-oauth/google'
 import LockOutlineIcon from '@material-ui/icons/LockOutlined'
-
 import useStyles from './styles'
-import Input from './Input'
-import { AUTH } from '../../constants/actionTypes'
-import { signin, signup } from '../../actions/auth'
+import { Input } from '*'
+import { AUTH } from '@/constants/actionTypes'
+import { signin, signup } from '@/actions/auth'
+import { useToast } from '@/hooks/useToast'
 
 const initialState = {
   firstName: '',
@@ -29,6 +29,7 @@ const initialState = {
 const Auth = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const toast = useToast()
   const navigate = useNavigate()
   const [form, setForm] = useState(initialState)
   const [isSignup, setIsSignup] = useState(false)
@@ -65,9 +66,15 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (isSignup) {
-      dispatch(signup(form, navigate))
+      const singup = dispatch(signup(form, navigate))
+      toast.handleDisplayBanner(
+        singup,
+        `Creating user`,
+        `Created user`,
+        `Incorrect data or user is already exists!`
+      )
     } else {
-      dispatch(signin(form, navigate))
+      const sigin = dispatch(signin(form, navigate))
     }
   }
   const handleChange = (e) => {

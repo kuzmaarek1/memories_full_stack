@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { uploadImage } from '../actions/upload'
+import { uploadImage } from '@/actions/upload'
 
 export const useImage = () => {
   const fileName = useRef('')

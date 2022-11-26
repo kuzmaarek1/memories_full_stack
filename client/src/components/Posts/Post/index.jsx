@@ -15,14 +15,18 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import moment from 'moment'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
-import { likePost, deletePost } from '../../../actions/posts'
+import { likePost, deletePost } from '@/actions/posts'
 import useStyles from './styles'
+import { useQuery } from '@/hooks/useQuery'
+import { useToast } from '@/hooks/useToast'
 
 const Post = ({ post, setCurrentId }) => {
   const dispatch = useDispatch()
   const classes = useStyles()
   const navigate = useNavigate()
+  const toast = useToast()
+  const query = useQuery()
+  const page = query.get('page') || 1
   const user = JSON.parse(localStorage.getItem('profile'))
   const [likes, setLikes] = useState(post?.likes)
 
@@ -40,8 +44,18 @@ const Post = ({ post, setCurrentId }) => {
     }
   }
 
+  const handleDeletePost = () => {
+    const deleteFunc = dispatch(deletePost(post._id, page))
+    toast.handleDisplayBanner(
+      deleteFunc,
+      `Deleteting post ${post.title}`,
+      `Delete post ${post.title}`
+    )
+    setCurrentId(0)
+  }
+
   const Likes = () => {
-    if (likes.length > 0) {
+    if (likes?.length > 0) {
       return likes.find((like) => like === userId) ? (
         <>
           <ThumbUpAltIcon fontSize="small" />
@@ -95,16 +109,13 @@ const Post = ({ post, setCurrentId }) => {
         {(user?.result?.googleId === post?.creator ||
           user?.result?._id === post?.creator) && (
           <div className={classes.overlay2}>
-            <Button
+            <MoreHorizIcon
+              fontSize="medium"
               onClick={(e) => {
                 e.stopPropagation()
                 setCurrentId(post._id)
               }}
-              style={{ color: 'white' }}
-              size="small"
-            >
-              <MoreHorizIcon fontSize="default" />
-            </Button>
+            />
           </div>
         )}
         <div className={classes.details}>
@@ -122,7 +133,9 @@ const Post = ({ post, setCurrentId }) => {
         </Typography>
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            {post.message}
+            {post.message.length > 250
+              ? `${post.message.substring(0, 250)}...`
+              : post.message}
           </Typography>
         </CardContent>
       </ButtonBase>
@@ -137,11 +150,7 @@ const Post = ({ post, setCurrentId }) => {
         </Button>
         {(user?.result?.googleId === post?.creator ||
           user?.result?._id === post?.creator) && (
-          <Button
-            size="small"
-            color="secondary"
-            onClick={() => dispatch(deletePost(post._id))}
-          >
+          <Button size="small" color="secondary" onClick={handleDeletePost}>
             <DeleteIcon fontSize="small" /> Delete
           </Button>
         )}

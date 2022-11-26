@@ -1,29 +1,37 @@
 import React, { useState, useRef } from 'react'
 import { Typography, TextField, Button } from '@material-ui/core/'
-import { useDispatch } from 'react-redux'
-
-import { commentPost } from '../../actions/posts'
+import { useDispatch, useSelector } from 'react-redux'
+import { commentPost } from '@/actions/posts'
 import useStyles from './styles'
+import { useToast } from '@/hooks/useToast'
+import { useEffect } from 'react'
 
 const CommentSection = ({ post }) => {
+  const toast = useToast()
   const user = JSON.parse(localStorage.getItem('profile'))
+  const posts = useSelector((state) => state.posts)
   const [comment, setComment] = useState('')
   const dispatch = useDispatch()
   const [comments, setComments] = useState(post?.comments)
   const classes = useStyles()
   const commentsRef = useRef()
 
+  useEffect(() => {
+    comment !== '' &&
+      setComments((prev) => [...prev, `${user?.result?.name}: ${comment}`])
+    setComment('')
+  }, [posts])
+
+  useEffect(() => {
+    commentsRef.current.scrollIntoView()
+  }, [comments])
+
   const handleComment = async () => {
-    const newComments = await dispatch(
+    const newComments = dispatch(
       commentPost(`${user?.result?.name}: ${comment}`, post._id)
     )
-
-    setComment('')
-    setComments(newComments)
-    
-    commentsRef.current.scrollIntoView()
+    toast.handleDisplayBanner(newComments, `Adding comment`, `Added comment`)
   }
-
   return (
     <div>
       <div className={classes.commentsOuterContainer}>
@@ -46,7 +54,7 @@ const CommentSection = ({ post }) => {
             </Typography>
             <TextField
               fullWidth
-              rows={4}
+              minRows={4}
               variant="outlined"
               label="Comment"
               multiline

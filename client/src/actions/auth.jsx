@@ -1,5 +1,6 @@
-import { AUTH } from '../constants/actionTypes'
-import * as api from '../api/index.jsx'
+import { AUTH } from '@/constants/actionTypes'
+import * as api from '@/api/index.jsx'
+import { toast } from 'react-hot-toast'
 
 export const signin = (formData, navigate) => async (dispatch) => {
   try {
@@ -7,6 +8,7 @@ export const signin = (formData, navigate) => async (dispatch) => {
     dispatch({ type: AUTH, data })
     navigate('/')
   } catch (error) {
+    toast.error('Login failed')
     console.log(error)
   }
 }
@@ -18,5 +20,6 @@ export const signup = (formData, navigate) => async (dispatch) => {
     navigate('/')
   } catch (error) {
     console.log(error)
+    return data
   }
 }
