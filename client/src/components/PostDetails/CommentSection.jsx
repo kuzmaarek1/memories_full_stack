@@ -5,11 +5,11 @@ import { commentPost } from '@/actions/posts'
 import useStyles from './styles'
 import { useToast } from '@/hooks/useToast'
 import { useEffect } from 'react'
-import { updatePost } from '../../actions/posts'
 
 const CommentSection = ({ post }) => {
   const toast = useToast()
   const user = JSON.parse(localStorage.getItem('profile'))
+  const posts = useSelector((state) => state.posts)
   const [comment, setComment] = useState('')
   const dispatch = useDispatch()
   const [comments, setComments] = useState(post?.comments)
@@ -17,14 +17,19 @@ const CommentSection = ({ post }) => {
   const commentsRef = useRef()
 
   useEffect(() => {
+    comment !== '' &&
+      setComments((prev) => [...prev, `${user?.result?.name}: ${comment}`])
+    setComment('')
+  }, [posts])
+
+  useEffect(() => {
     commentsRef.current.scrollIntoView()
-  }, [])
+  }, [comments])
 
   const handleComment = async () => {
     const newComments = dispatch(
       commentPost(`${user?.result?.name}: ${comment}`, post._id)
     )
-    setComment('')
     toast.handleDisplayBanner(newComments, `Adding comment`, `Added comment`)
   }
   return (
